@@ -3,7 +3,7 @@ Beginner level. Introduction in ES6/React.
 
 This course will give short update what is ES6 comparing it with ES5, new features, language syntax.
 
-# Course contains: 
+# Course contains
 
 1. ES6 theory. 67 min.
 2. React theory. 58 min.
