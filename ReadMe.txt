@@ -3,7 +3,7 @@ Folders:
 -- src - contains application content.
     -- __mocks__ - some generic mocks for all application.
     -- images - contain grapfic artefacts.
-    -- scripts - contains main application content exept images and index.html entry page.
+    -- app - contains main application content exept images and index.html entry page.
         -- components - generic components (presentational components/dumb components) for all application that hasn't access to redux.
         -- containers - (smart components) that has own state.
         -- index.js - entry page.
