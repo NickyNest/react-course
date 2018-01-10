@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Logo from 'components/Logo';
+import ToDoContainer from 'containers/ToDoContainer';
 import './index.css';
 
 class MainPage extends Component {
@@ -25,21 +26,26 @@ class MainPage extends Component {
         const {pathToFile, counter} = this.state;
         const title = 'Welcome to React';
         return (
-            <div className='App'>
-                <div className='App-header'>
-                    <Logo className='App-logo' alt='logo' />
-                    <h2>
-                        {title}
-                    </h2>
+            <div>
+                <div className='App'>
+                    <div className='App-header'>
+                        <Logo className='App-logo' alt='logo' />
+                        <h2>
+                            {title}
+                        </h2>
+                    </div>
+                    <p className='App-intro'>
+                        {'To get started, edit '}
+                        <code>{pathToFile}</code>
+                        {' and save to reload.'}
+                    </p>
+                    <p className='App-intro'>
+                        {`Infinity increasing counter: ${counter}`}
+                    </p>
                 </div>
-                <p className='App-intro'>
-                    {'To get started, edit '}
-                    <code>{pathToFile}</code>
-                    {' and save to reload.'}
-                </p>
-                <p className='App-intro'>
-                    {`Infinity increasing counter: ${counter}`}
-                </p>
+                <div>
+                    <ToDoContainer />
+                </div>
             </div>
         );
     }
