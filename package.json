@@ -7,7 +7,7 @@
     "author": "Andrii Shpylovyi",
     "repository": {
         "type": "git",
-        "url": "https://github.exactsoftware.com/Training/react-course"
+        "url": "https://github.exactsoftware.com/Mykola-Nesterenko/react-course"
     },
     "scripts": {
         "test-cache-clear": "jest --clearCache",
