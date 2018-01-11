@@ -1,5 +1,5 @@
 import React from 'react';
-import string from 'prop-types';
+import {string} from 'prop-types';
 
 const ToDoTitle = ({className}) => <h3 className={className}>Simple To-Do application</h3>;
 
