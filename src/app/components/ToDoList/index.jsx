@@ -1,6 +1,6 @@
 import React from 'react';
 import ToDoItem from 'components/ToDoItem';
-import PropTypes from 'prop-types';
+import {arrayOf, string} from 'prop-types';
 
 const ToDoList = ({items}) => (
     <div>
@@ -9,10 +9,10 @@ const ToDoList = ({items}) => (
 );
 
 ToDoList.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.string).isRequired
+    items: arrayOf(string)
 };
 
-ToDoItem.defaultProps = {
+ToDoList.defaultProps = {
     items: []
 };
 

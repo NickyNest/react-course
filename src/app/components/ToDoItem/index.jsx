@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {string} from 'prop-types';
+import './index.css';
 
-let isDoneCheckbox = null;
+class ToDoItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {isChecked: false};
+    }
 
-const handleChange = () => {
-    console.log(isDoneCheckbox.checked);
-};
+    handleChange = () => {
+        this.setState({isChecked: !this.state.isChecked});
+    }
 
-const ToDoItem = ({item}) => (
-    <div>
-        <input type='checkbox' ref={name => { isDoneCheckbox = name; }} onChange={handleChange} />
-        {item}
-        <button>X</button>
-    </div>
-);
+    render() {
+        const className = this.state.isChecked ? 'throw-text' : '';
+        return (
+            <div>
+                <input type='checkbox' onClick={this.handleChange} />
+                <span className={className}>{this.props.item}</span>
+                <button>X</button>
+            </div>
+        );
+    }
+}
 
 ToDoItem.propTypes = {
     item: string
