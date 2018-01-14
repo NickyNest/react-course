@@ -23,11 +23,15 @@ class ToDoContainer extends Component {
         this.setState({items: newItems});
     };
 
+    onRemoveItem = id => {
+        this.setState({items: this.state.items.filter(item => item.id !== id)});
+    };
+
     render() {
         return (
             <div>
                 <ToDoTitle className='Todo-title' />
-                <ToDoList items={this.state.items} onCheckChange={this.onCheckChange} />
+                <ToDoList items={this.state.items} onCheckChange={this.onCheckChange} onRemoveItem={this.onRemoveItem} />
             </div>
         );
     }
