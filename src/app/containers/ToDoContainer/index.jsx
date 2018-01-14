@@ -9,17 +9,25 @@ class ToDoContainer extends Component {
         this.state = {
             items: [
                 {id: 1, text: 'item1', isChecked: false},
-                {id: 2, text: 'item2', isChecked: true},
+                {id: 2, text: 'item2', isChecked: false},
                 {id: 3, text: 'item3', isChecked: false}
             ]
         };
     }
 
+    onCheckChange = id => {
+        const newItems = [...this.state.items];
+        const index = newItems.findIndex(item => item.id === id);
+        newItems[index].isChecked = !newItems[index].isChecked;
+
+        this.setState({items: newItems});
+    };
+
     render() {
         return (
             <div>
                 <ToDoTitle className='Todo-title' />
-                <ToDoList items={this.state.items} />
+                <ToDoList items={this.state.items} onCheckChange={this.onCheckChange} />
             </div>
         );
     }

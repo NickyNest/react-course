@@ -1,10 +1,10 @@
 import React from 'react';
 import ToDoItem from 'components/ToDoItem';
-import {arrayOf, shape, number, string, bool} from 'prop-types';
+import {arrayOf, shape, number, string, bool, func} from 'prop-types';
 
-const ToDoList = ({items}) => (
+const ToDoList = ({items, onCheckChange}) => (
     <div>
-        {items.map(item => <ToDoItem key={item.id} item={item} />)}
+        {items.map(item => <ToDoItem key={item.id} item={item} onCheckChange={onCheckChange} />)}
     </div>
 );
 
@@ -13,7 +13,8 @@ ToDoList.propTypes = {
         id: number,
         text: string,
         isChecked: bool
-    }))
+    })),
+    onCheckChange: func.isRequired
 };
 
 ToDoList.defaultProps = {
