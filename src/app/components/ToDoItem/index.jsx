@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {string} from 'prop-types';
+import {shape, number, string, bool} from 'prop-types';
 import './index.css';
 
 class ToDoItem extends Component {
@@ -17,7 +17,7 @@ class ToDoItem extends Component {
         return (
             <div>
                 <input type='checkbox' onClick={this.handleChange} />
-                <span className={className}>{this.props.item}</span>
+                <span className={className}>{this.props.item.text}</span>
                 <button>X</button>
             </div>
         );
@@ -25,11 +25,15 @@ class ToDoItem extends Component {
 }
 
 ToDoItem.propTypes = {
-    item: string
+    item: shape({
+        id: number,
+        text: string,
+        isChecked: bool
+    })
 };
 
 ToDoItem.defaultProps = {
-    item: ''
+    item: {}
 };
 
 export default ToDoItem;

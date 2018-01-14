@@ -7,7 +7,11 @@ class ToDoContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: ['item1', 'item2', 'item3']
+            items: [
+                {id: 1, text: 'item1', isChecked: false},
+                {id: 2, text: 'item2', isChecked: true},
+                {id: 3, text: 'item3', isChecked: false}
+            ]
         };
     }
 
