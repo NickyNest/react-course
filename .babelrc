@@ -3,7 +3,7 @@
         "react",
         "stage-3",
         [
-            "es2015",
+            "env",
             {
                 "modules": false,
                 "loose": true
