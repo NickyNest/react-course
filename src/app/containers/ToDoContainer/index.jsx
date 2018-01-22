@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import ToDoTitle from 'components/ToDoTitle';
 import ToDoInput from 'components/ToDoInput';
-import ToDoList from 'components/ToDoList';
+import ToDoItem from 'components/ToDoItem';
 import './index.css';
 
 class ToDoContainer extends Component {
@@ -18,11 +17,22 @@ class ToDoContainer extends Component {
         this.setState({items: [...this.state.items, newItem] });
     };
 
-    onCheckChange = id => {
-        const newItems = [...this.state.items];
-        const index = newItems.findIndex(item => item.id === id);
-        newItems[index].isChecked = !newItems[index].isChecked;
+    // onCheckChange = id => {
+    //     const newItems = [...this.state.items];
+    //     const index = newItems.findIndex(item => item.id === id);
+    //     newItems[index].isChecked = !newItems[index].isChecked;
 
+    //     this.setState({items: newItems});
+    // };
+
+    onCheckChange = id => {
+        const {items} = this.state;
+        const itemIndex = items.findIndex(item => item.id === id);
+        const newItems = [
+            ...items.slice(0, itemIndex),
+            {...items[itemIndex], isChecked: !items[itemIndex].isChecked},
+            ...items.slice(itemIndex + 1, items.length)
+        ];
         this.setState({items: newItems});
     };
 
@@ -30,12 +40,22 @@ class ToDoContainer extends Component {
         this.setState({items: this.state.items.filter(item => item.id !== id)});
     };
 
+    mapToDoItemList = items => (
+        <div>
+            {
+                items.map(item =>
+                    <ToDoItem key={item.id} item={item} onCheckChange={this.onCheckChange} onRemoveItem={this.onRemoveItem} />)
+            }
+        </div>
+    );
+
     render() {
+        const {items} = this.state;
         return (
             <div>
-                <ToDoTitle className='Todo-title' />
+                <h3 className='Todo-title'>Simple To-Do application</h3>
                 <ToDoInput onAddItem={this.onAddItem} />
-                <ToDoList items={this.state.items} onCheckChange={this.onCheckChange} onRemoveItem={this.onRemoveItem} />
+                {items.length === 0 ? 'huhЪ' : this.mapToDoItemList(items)}
             </div>
         );
     }

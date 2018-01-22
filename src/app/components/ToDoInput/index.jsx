@@ -7,22 +7,26 @@ class ToDoInput extends Component {
         this.state = {task: ''};
     }
 
-    onChange = e => {
-        this.setState({task: e.target.value});
-    };
+    onChange = ({target}) => this.setState({task: target.value});
 
     onClick = () => {
-        if (!this.state.task) {
+        const {task} = this.state;
+        if (!task) {
             return;
         }
-        this.props.onAddItem(this.state.task);
+        this.props.onAddItem(task);
         this.setState({task: ''});
     };
 
     render() {
         return (
             <div>
-                <input type='text' placeholder='add task' onChange={e => this.onChange(e)} value={this.state.task} />
+                <input
+                    type='text'
+                    placeholder='add task'
+                    onChange={this.onChange}
+                    value={this.state.task}
+                    onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''} />
                 <button onClick={this.onClick}>Add</button>
             </div>
         );
