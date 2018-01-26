@@ -1,21 +1,22 @@
-/* eslint-disable no-undef, no-console , import/no-extraneous-dependencies */
+/* eslint-disable no-undef, no-console , import/no-extraneous-dependencies, global-require */
 
-const colors = require('colors'); // eslint-disable-line no-unused-vars
-const express = require('express');
-const fs = require('fs');
-const open = require('open');
-const path = require('path');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackConfig = require('../webpack.config');
+import colors from 'colors'; // eslint-disable-line no-unused-vars
+import express from 'express';
+import fs from 'fs';
+import open from 'open';
+import path from 'path';
+import jsonServer from 'json-server';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack.config';
 
 
 const port = 60253;
 const host = 'localhost';
 const app = express();
 const compiler = webpack(webpackConfig);
-const middleware = webpackDevMiddleware(compiler, {
+const instance = webpackDevMiddleware(compiler, {
     contentBase: `http://${host}:${port}`,
     quiet: false,
     noInfo: false,
@@ -32,20 +33,28 @@ const middleware = webpackDevMiddleware(compiler, {
     }
 });
 
-app.use(middleware);
-app.use(webpackHotMiddleware(compiler));
+app.use(instance);
 
-const content = fs.readFileSync(path.join(__dirname, '../src/index.html'), 'utf-8');
-const newValue = content.replace(/-->/g, '').replace(/<!--/g, '');
+instance.waitUntilValid(() => {
+    app.use(webpackHotMiddleware(compiler));
 
-app.get('*', (req, res) => {
-    res.send(newValue);
-});
+    // api mock. Example: http://localhost:60253/api/identityMock
+    // all mocks defined in db.json file
+    app.use('/liveApi', jsonServer.router(require('./tasks.js')()));
+    app.use('/api', jsonServer.router('db.json'));
 
-app.listen(port, error => {
-    if (error) {
-        console.log(error.red);
-    } else {
-        open(`http://${host}:${port}`);
-    }
+    const content = fs.readFileSync(path.join(__dirname, '../src/index.html'), 'utf-8');
+    const newValue = content.replace(/-->/g, '').replace(/<!--/g, '');
+
+    app.get('/', (req, res) => {
+        res.send(newValue);
+    });
+
+    app.listen(port, error => {
+        if (error) {
+            console.log(error.red);
+        } else {
+            open(`http://${host}:${port}`);
+        }
+    });
 });
