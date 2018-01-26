@@ -84,6 +84,7 @@
         "prop-types": "15.6.0",
         "ramda": "0.25.0",
         "react": "16.2.0",
-        "react-dom": "16.2.0"
+        "react-dom": "16.2.0",
+        "semantic-ui-react": "^0.77.2"
     }
 }

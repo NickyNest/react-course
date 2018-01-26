@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {func} from 'prop-types';
+import {Button} from 'semantic-ui-react';
 
 class ToDoInput extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class ToDoInput extends Component {
                     onChange={this.onChange}
                     value={this.state.task}
                     onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''} />
-                <button onClick={this.onClick}>Add</button>
+                <Button onClick={this.onClick}>Add</Button>
             </div>
         );
     }
