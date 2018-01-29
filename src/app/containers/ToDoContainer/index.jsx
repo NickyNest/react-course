@@ -51,9 +51,10 @@ class ToDoContainer extends Component {
 
     render() {
         const {items} = this.state;
+        const title = 'Simple To-Do application';
         return (
             <div>
-                <h3 className='Todo-title'>Simple To-Do application</h3>
+                <h3 className='Todo-title'>{title}</h3>
                 <ToDoInput onAddItem={this.onAddItem} />
                 {items.length === 0 ? 'huhЪ' : this.mapToDoItemList(items)}
             </div>

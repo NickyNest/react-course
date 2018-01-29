@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {func} from 'prop-types';
-import {Button} from 'semantic-ui-react';
+import {Input} from 'semantic-ui-react';
 
 class ToDoInput extends Component {
     constructor(props) {
@@ -22,13 +22,13 @@ class ToDoInput extends Component {
     render() {
         return (
             <div>
-                <input
-                    type='text'
+                <Input
+                    focus
                     placeholder='add task'
                     onChange={this.onChange}
                     value={this.state.task}
-                    onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''} />
-                <Button onClick={this.onClick}>Add</Button>
+                    onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''}
+                    action={{primary: true, content: 'Add', onClick: this.onClick}} />
             </div>
         );
     }
