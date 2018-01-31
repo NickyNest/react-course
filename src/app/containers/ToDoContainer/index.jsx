@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ToDoInput from 'components/ToDoInput';
 import ToDoItem from 'components/ToDoItem';
+import {Grid} from 'semantic-ui-react';
 import './index.css';
 
 class ToDoContainer extends Component {
@@ -56,7 +57,11 @@ class ToDoContainer extends Component {
             <div>
                 <h3 className='Todo-title'>{title}</h3>
                 <ToDoInput onAddItem={this.onAddItem} />
-                {items.length === 0 ? 'huhЪ' : this.mapToDoItemList(items)}
+                <Grid>
+                    <Grid.Column width={5}>
+                        {items.length === 0 ? 'huhЪ' : this.mapToDoItemList(items)}
+                    </Grid.Column>
+                </Grid>
             </div>
         );
     }
