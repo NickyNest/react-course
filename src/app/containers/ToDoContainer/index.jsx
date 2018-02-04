@@ -15,9 +15,7 @@ class ToDoContainer extends Component {
     }
 
     componentWillMount() {
-        fetch('http://localhost:60253/api/tasks')
-            .then(response => response.json())
-            .then(data => this.setState({tasks: data}));
+        this.getTasks();
     }
 
     onAddTask = title => {
@@ -54,11 +52,71 @@ class ToDoContainer extends Component {
         this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
     };
 
+    getTasks = () => {
+        fetch('http://localhost:60253/api/tasks')
+            .then(response => response.json())
+            .then(data => this.setState({tasks: data}));
+    };
+
+    AddTask = title => {
+        const createdDate = new Date();
+        const newTask = {
+            id: faker.random.uuid(),
+            title,
+            completed: false,
+            createdDate: `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`
+        };
+
+        fetch('http://localhost:60253/api/tasks', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newTask)
+        });
+
+        // .then(response => response.json())
+        // .then(data => console.log(data));
+
+        this.getTasks();
+    };
+
+    UpdateTak = id => {
+        const {tasks} = this.state;
+        const taskIndex = tasks.findIndex(task => task.id === id);
+
+        fetch(`http://localhost:60253/api/tasks/${id}`, {
+            method: 'PATCH',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({...tasks[taskIndex], completed: !tasks[taskIndex].completed})
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
+
+        this.getTasks();
+    };
+
+    RemoveTask = id => {
+        fetch(`http://localhost:60253/api/tasks/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        this.getTasks();
+    };
+
     mapToDoTaskList = tasks => (
         <div>
             {
                 tasks.map(task =>
-                    <Task key={task.id} task={task} onCheckChange={this.onCheckChange} onRemoveTask={this.onRemoveTask} />)
+                    <Task key={task.id} task={task} onCheckChange={this.UpdateTak} onRemoveTask={this.RemoveTask} />)
             }
         </div>
     );
@@ -69,7 +127,7 @@ class ToDoContainer extends Component {
         return (
             <div>
                 <h3 className='Todo-title'>{title}</h3>
-                <TaskInput onAddTask={this.onAddTask} />
+                <TaskInput onAddTask={this.AddTask} />
                 <Grid>
                     <Grid.Column width={5}>
                         {tasks.length === 0 ? 'huhЪ' : this.mapToDoTaskList(tasks)}
