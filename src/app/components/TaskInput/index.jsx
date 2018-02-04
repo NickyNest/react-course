@@ -2,21 +2,21 @@ import React, {Component} from 'react';
 import {func} from 'prop-types';
 import {Input} from 'semantic-ui-react';
 
-class ToDoInput extends Component {
+class TaskInput extends Component {
     constructor(props) {
         super(props);
-        this.state = {task: ''};
+        this.state = {title: ''};
     }
 
-    onChange = ({target}) => this.setState({task: target.value});
+    onChange = ({target}) => this.setState({title: target.value});
 
     onClick = () => {
-        const {task} = this.state;
-        if (!task) {
+        const {title} = this.state;
+        if (!title) {
             return;
         }
-        this.props.onAddItem(task);
-        this.setState({task: ''});
+        this.props.onAddTask(title);
+        this.setState({title: ''});
     };
 
     render() {
@@ -26,7 +26,7 @@ class ToDoInput extends Component {
                     focus
                     placeholder='add task'
                     onChange={this.onChange}
-                    value={this.state.task}
+                    value={this.state.title}
                     onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''}
                     action={{primary: true, content: 'Add', onClick: this.onClick}} />
             </div>
@@ -34,8 +34,8 @@ class ToDoInput extends Component {
     }
 }
 
-ToDoInput.propTypes = {
-    onAddItem: func.isRequired
+TaskInput.propTypes = {
+    onAddTask: func.isRequired
 };
 
-export default ToDoInput;
+export default TaskInput;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import ToDoInput from 'components/ToDoInput';
-import ToDoItem from 'components/ToDoItem';
+import TaskInput from 'components/TaskInput';
+import Task from 'components/Task';
 import {Grid} from 'semantic-ui-react';
 import fetch from 'isomorphic-fetch';
 import faker from 'faker';
@@ -20,11 +20,11 @@ class ToDoContainer extends Component {
             .then(data => this.setState({tasks: data}));
     }
 
-    onAddItem = text => {
+    onAddTask = title => {
         const createdDate = new Date();
         const newTask = {
             id: faker.random.uuid(),
-            title: text,
+            title,
             completed: false,
             createdDate: `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`
         };
@@ -50,7 +50,7 @@ class ToDoContainer extends Component {
         this.setState({tasks: newTask});
     };
 
-    onRemoveItem = id => {
+    onRemoveTask = id => {
         this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
     };
 
@@ -58,7 +58,7 @@ class ToDoContainer extends Component {
         <div>
             {
                 tasks.map(task =>
-                    <ToDoItem key={task.id} task={task} onCheckChange={this.onCheckChange} onRemoveItem={this.onRemoveItem} />)
+                    <Task key={task.id} task={task} onCheckChange={this.onCheckChange} onRemoveTask={this.onRemoveTask} />)
             }
         </div>
     );
@@ -69,7 +69,7 @@ class ToDoContainer extends Component {
         return (
             <div>
                 <h3 className='Todo-title'>{title}</h3>
-                <ToDoInput onAddItem={this.onAddItem} />
+                <TaskInput onAddTask={this.onAddTask} />
                 <Grid>
                     <Grid.Column width={5}>
                         {tasks.length === 0 ? 'huhЪ' : this.mapToDoTaskList(tasks)}
