@@ -78,6 +78,8 @@
     },
     "dependencies": {
         "babel-polyfill": "6.26.0",
+        "faker": "^4.1.0",
+        "isomorphic-fetch": "^2.2.1",
         "lodash._root": "3.0.1",
         "lodash.debounce": "4.0.8",
         "lodash.throttle": "4.1.1",
