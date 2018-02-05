@@ -5,6 +5,7 @@ import {Grid} from 'semantic-ui-react';
 import fetch from 'isomorphic-fetch';
 import faker from 'faker';
 import './index.css';
+import {get, remove} from './ApiTool';
 
 class ToDoContainer extends Component {
     constructor(props) {
@@ -15,7 +16,12 @@ class ToDoContainer extends Component {
     }
 
     componentWillMount() {
-        this.getTasks();
+        // console.log(getAll());
+        // this.getTasks();
+        // this.setState({tasks: getAll()});
+
+        get()
+            .then(tasks => this.setState({tasks}));
     }
 
     onAddTask = title => {
@@ -101,15 +107,18 @@ class ToDoContainer extends Component {
     };
 
     RemoveTask = id => {
-        fetch(`http://localhost:60253/api/tasks/${id}`, {
-            method: 'DELETE',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
+        // fetch(`http://localhost:60253/api/tasks/${id}`, {
+        //     method: 'DELETE',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
 
-        this.getTasks();
+        // this.getTasks();
+        remove(id);
+        get()
+            .then(tasks => this.setState({tasks}));
     };
 
     mapToDoTaskList = tasks => (
