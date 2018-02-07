@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import TaskInput from 'components/TaskInput';
 import Task from 'components/Task';
+import FilterBar from 'components/FilterBar';
 import {Grid} from 'semantic-ui-react';
-import {toDate, buildTask} from './helpers';
+import {toDate, buildTask, handleShowMode, handleSortMode} from './helpers';
 import {get, create, update, remove} from './ApiTool';
+import {showModes, sortModes} from './enums';
 import './index.css';
 
 class ToDoContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: [],
+            showMode: showModes.showAll,
+            sortMode: sortModes.None
         };
     }
 
@@ -48,12 +52,38 @@ class ToDoContainer extends Component {
         </div>
     );
 
+    changeShowMode = showMode => {
+        this.setState({showMode});
+    };
+
+    removeCompleted = () => {
+        this.state.tasks
+            .filter(task => task.completed === true)
+            .forEach(task => this.removeTask(task.id));
+
+        this.getAllTasks();
+    };
+
+    changeSortMode = sortMode => {
+        this.setState({sortMode});
+    };
+
     render() {
-        const {tasks} = this.state;
+        const {showMode} = this.state;
+
+        let tasks = handleShowMode(this.state.tasks, showMode);
+        tasks = handleSortMode(tasks, this.state.sortMode);
+
         const title = 'Simple To-Do application';
         return (
             <div>
                 <h3 className='Todo-title'>{title}</h3>
+                <FilterBar
+                    changeShowMode={this.changeShowMode}
+                    removeCompleted={this.removeCompleted}
+                    changeSortMode={this.changeSortMode}
+                    currentMode={showMode} />
+                <span>total: {tasks.length}</span>
                 <TaskInput onAddTask={this.addTask} />
                 <Grid>
                     <Grid.Column width={5}>
