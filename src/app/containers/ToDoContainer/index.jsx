@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import TaskInput from 'components/TaskInput';
 import Task from 'components/Task';
 import {Grid} from 'semantic-ui-react';
-import faker from 'faker';
-import './index.css';
+import {toDate, buildTask} from './helpers';
 import {get, create, update, remove} from './ApiTool';
+import './index.css';
 
 class ToDoContainer extends Component {
     constructor(props) {
@@ -20,22 +20,12 @@ class ToDoContainer extends Component {
 
     getAllTasks = () => {
         get()
+            .then(response => response.map(x => ({...x, createdDate: toDate(x.createdDate)})))
             .then(tasks => this.setState({tasks}));
     };
 
-    buildTask = title => {
-        const createdDate = new Date();
-
-        return {
-            id: faker.random.uuid(),
-            title,
-            completed: false,
-            createdDate: `${createdDate.getDate()}/${createdDate.getMonth() + 1}/${createdDate.getFullYear()}`
-        };
-    };
-
     addTask = title => {
-        create(this.buildTask(title));
+        create(buildTask(title));
         this.getAllTasks();
     };
 
