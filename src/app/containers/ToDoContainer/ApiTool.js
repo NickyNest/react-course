@@ -2,9 +2,12 @@ import fetch from 'isomorphic-fetch';
 
 const endpoint = 'http://localhost:60253/api/tasks';
 
-const fetchRequest = (method, resourceId, body) => {
-    // debugger; // eslint-disable-line
-    const url = resourceId ? `${endpoint}/${resourceId}` : endpoint;
+const fetchRequest = options => {
+    const {method} = options;
+    const {id} = options;
+    const {body} = options;
+
+    const url = id ? `${endpoint}/${id}` : endpoint;
     const init = {
         method,
         headers: {
@@ -23,8 +26,9 @@ const fetchRequest = (method, resourceId, body) => {
         .catch(error => { throw new Error(error); });
 };
 
-const get = () => fetchRequest('GET');
+const get = () => fetchRequest({method: 'GET'});
+const create = body => fetchRequest({method: 'POST', body});
+const update = (id, body) => fetchRequest({method: 'PATCH', id, body});
+const remove = id => fetchRequest({method: 'DELETE', id});
 
-const remove = id => fetchRequest('DELETE', id);
-
-export {get, remove};
+export {get, create, update, remove};

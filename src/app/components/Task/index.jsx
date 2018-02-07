@@ -5,7 +5,7 @@ import './index.css';
 
 const Task = ({task, onCheckChange, onRemoveTask}) => (
     <div>
-        <Checkbox toggle checked={task.completed} onChange={() => onCheckChange(task.id)} />
+        <Checkbox toggle checked={task.completed} onChange={(e, {checked}) => onCheckChange(task.id, checked)} />
         <span className={task.completed ? 'throw-text' : ''}>{task.title} {task.createdDate}</span>
         <button onClick={() => onRemoveTask(task.id)}>X</button>
     </div>
