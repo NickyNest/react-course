@@ -20,15 +20,10 @@ const fetchRequest = options => {
         init.body = JSON.stringify(body);
     }
 
-    return fetch(url, init)
-        .then(response => response.json())
-        .then(responseData => responseData)
-        .catch(error => { throw new Error(error); });
+    return fetch(url, init);
 };
 
-const get = () => fetchRequest({method: 'GET'});
-const create = body => fetchRequest({method: 'POST', body});
-const update = (id, body) => fetchRequest({method: 'PATCH', id, body});
-const remove = id => fetchRequest({method: 'DELETE', id});
-
-export {get, create, update, remove};
+export const get = () => fetchRequest({method: 'GET'});
+export const create = body => fetchRequest({method: 'POST', body});
+export const update = (id, body) => fetchRequest({method: 'PATCH', id, body});
+export const remove = id => fetchRequest({method: 'DELETE', id});

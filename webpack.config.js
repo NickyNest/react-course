@@ -143,6 +143,7 @@ const resolve = {
     alias: {
         components: path.join(__dirname, './src/app/components'),
         containers: path.join(__dirname, './src/app/containers'),
+        utils: path.join(__dirname, './src/app/utils'),
         images: path.join(__dirname, './src/images'),
         tools: path.join(__dirname, './tools')
     },

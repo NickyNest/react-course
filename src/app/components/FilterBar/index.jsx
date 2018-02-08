@@ -1,7 +1,7 @@
 import React from 'react';
-import {func, number} from 'prop-types';
+import {func, string} from 'prop-types';
 import {Button} from 'semantic-ui-react';
-import {showModes, sortModes} from '../../containers/ToDoContainer/enums';
+import * as actions from 'utils/actions';
 
 const FilterBar = ({changeShowMode, removeCompleted, changeSortMode, currentMode}) => {
     const onClick = showMode => {
@@ -14,12 +14,12 @@ const FilterBar = ({changeShowMode, removeCompleted, changeSortMode, currentMode
 
     return (
         <div>
-            <Button onClick={() => onClick(showModes.showAll)}>All</Button>
-            <Button onClick={() => onClick(showModes.showCompleted)}>Completed</Button>
-            <Button onClick={() => onClick(showModes.showPending)}>Pending</Button>
-            <Button onClick={removeCompleted} disabled={currentMode === showModes.showPending}>Remove completed</Button>
-            <Button onClick={() => onChageSort(sortModes.Up)}>Date UP</Button>
-            <Button onClick={() => onChageSort(sortModes.Down)}>Date DOWN</Button>
+            <Button onClick={() => onClick(actions.SHOW_ALL)}>All</Button>
+            <Button onClick={() => onClick(actions.SHOW_COMPLETED)}>Completed</Button>
+            <Button onClick={() => onClick(actions.SHOW_PENDING)}>Pending</Button>
+            <Button onClick={removeCompleted} disabled={currentMode === actions.SHOW_PENDING}>Remove completed</Button>
+            <Button onClick={() => onChageSort(actions.SORT_CREATED_DATE_UP)}>Date UP</Button>
+            <Button onClick={() => onChageSort(actions.SORT_CREATED_DATE_DOWN)}>Date DOWN</Button>
         </div>
     );
 };
@@ -28,7 +28,7 @@ FilterBar.propTypes = {
     changeShowMode: func.isRequired,
     removeCompleted: func.isRequired,
     changeSortMode: func.isRequired,
-    currentMode: number.isRequired
+    currentMode: string.isRequired
 };
 
 export default FilterBar;
