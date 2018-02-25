@@ -26,7 +26,7 @@ class ToDoContainer extends Component {
         api.get()
             .then(response => response.json())
             .then(response => {
-                const tasks = response.map(x => ({...x, createdDate: toDate(x.createdDate)}));
+                const tasks = response.map(task => ({...task, createdDate: toDate(task.createdDate)}));
                 this.setState({tasks});
             });
     };
@@ -39,14 +39,31 @@ class ToDoContainer extends Component {
     };
 
     updateTak = (id, isCompleted) => {
-        api.update(id, {completed: isCompleted});
-        this.getAllTasks();
+        api.update(id, {completed: isCompleted})
+            .then(response => {
+                if (response.ok) {
+                    const {tasks} = this.state;
+                    const taskIndex = tasks.findIndex(task => task.id === id);
+                    const newTasks = [
+                        ...tasks.slice(0, taskIndex),
+                        {...tasks[taskIndex], completed: isCompleted},
+                        ...tasks.slice(taskIndex + 1, taskIndex.length)
+                    ];
+                    this.setState({tasks: newTasks});
+                }
+
+                throw new Error('Network response was not ok.');
+            });
     };
 
     removeTask = id => {
         api.remove(id)
             .then(response => {
-                // todo deletion
+                if (response.ok) {
+                    this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
+                }
+
+                throw new Error('Network response was not ok.');
             });
     };
 
