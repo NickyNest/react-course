@@ -27,7 +27,16 @@ export const handleShowMode = (tasks, showMode) => {
     }
 };
 
-const sortFunction = (task1, task2) => task1.createdDate - task2.createdDate;
+const sortFunction = (task1, task2) => {
+    if (task1.createdDate.getTime() === task2.createdDate.getTime()) {
+        if (task1.title < task2.title) {
+            return - 1;
+        }
+        return task1.title > task2.title ? 1 : 0;
+    }
+
+    return task1.createdDate.getTime() < task2.createdDate.getTime() ? - 1 : 1;
+};
 
 export const handleSortMode = (tasks, sortMode) => {
     switch (sortMode) {
