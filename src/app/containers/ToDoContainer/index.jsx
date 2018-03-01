@@ -50,9 +50,9 @@ class ToDoContainer extends Component {
                         ...tasks.slice(taskIndex + 1, taskIndex.length)
                     ];
                     this.setState({tasks: newTasks});
+                } else {
+                    throw new Error('Network response was not ok.');
                 }
-
-                throw new Error('Network response was not ok.');
             });
     };
 
@@ -61,9 +61,9 @@ class ToDoContainer extends Component {
             .then(response => {
                 if (response.ok) {
                     this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
+                } else {
+                    throw new Error('Network response was not ok.');
                 }
-
-                throw new Error('Network response was not ok.');
             });
     };
 

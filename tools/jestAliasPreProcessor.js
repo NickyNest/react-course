@@ -10,7 +10,7 @@ const getWebpackAliasPreprocessor = () => ({
 });
 
 module.exports = {
-    process(src, filePath) {
-        return getWebpackAliasPreprocessor().process(babelJest.process(src, filePath), filePath);
+    process(src, filePath, ...rest) {
+        return getWebpackAliasPreprocessor().process(babelJest.process(src, filePath, ...rest), filePath);
     }
 };
