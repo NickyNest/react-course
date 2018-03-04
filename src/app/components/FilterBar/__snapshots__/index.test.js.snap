@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterBar FilterBar (currentMode=SHOW_COMPLETED) match expected snapshot 1`] = `
+<div>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    All
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Completed
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Pending
+  </Button>
+  <Button
+    as="button"
+    disabled={false}
+    onClick={[Function]}
+  >
+    Remove completed
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Date UP
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Date DOWN
+  </Button>
+</div>
+`;
+
+exports[`FilterBar FilterBar (currentMode=SHOW_PENDING) match expected snapshot 1`] = `
+<div>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    All
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Completed
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Pending
+  </Button>
+  <Button
+    as="button"
+    disabled={true}
+    onClick={[Function]}
+  >
+    Remove completed
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Date UP
+  </Button>
+  <Button
+    as="button"
+    onClick={[Function]}
+  >
+    Date DOWN
+  </Button>
+</div>
+`;

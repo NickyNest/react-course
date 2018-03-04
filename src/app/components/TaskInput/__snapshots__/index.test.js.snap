@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskInput TaskInput match expected snapshot 1`] = `
+<div>
+  <Input
+    action={
+      Object {
+        "content": "Add",
+        "onClick": [Function],
+        "primary": true,
+      }
+    }
+    focus={true}
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="add task"
+    type="text"
+    value=""
+  />
+</div>
+`;

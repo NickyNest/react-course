@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToDoContainer ToDoContainer match expected snapshot 1`] = `
+<div>
+  <h3
+    className="Todo-title"
+  >
+    Simple To-Do application
+  </h3>
+  <FilterBar
+    changeShowMode={[Function]}
+    changeSortMode={[Function]}
+    currentMode="SHOW_ALL"
+    removeCompleted={[Function]}
+  />
+  <span>
+    total: 
+    0
+  </span>
+  <TaskInput
+    onAddTask={[Function]}
+  />
+  <Grid>
+    <GridColumn
+      width={5}
+    >
+      huhЪ
+    </GridColumn>
+  </Grid>
+</div>
+`;

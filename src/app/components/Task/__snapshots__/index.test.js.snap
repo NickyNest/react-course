@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Task Task (completed=false) match expected snapshot 1`] = `
+<div>
+  <Checkbox
+    checked={false}
+    onChange={[Function]}
+    toggle={true}
+    type="checkbox"
+  />
+  <span
+    className=""
+  >
+    temp
+  </span>
+    
+  <span>
+    2/1/1900
+  </span>
+  <button
+    onClick={[Function]}
+  >
+    X
+  </button>
+</div>
+`;
+
+exports[`Task Task (completed=true) match expected snapshot 1`] = `
+<div>
+  <Checkbox
+    checked={true}
+    onChange={[Function]}
+    toggle={true}
+    type="checkbox"
+  />
+  <span
+    className="throw-text"
+  >
+    temp
+  </span>
+    
+  <span>
+    2/1/1900
+  </span>
+  <button
+    onClick={[Function]}
+  >
+    X
+  </button>
+</div>
+`;
