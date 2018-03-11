@@ -1,21 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterBar FilterBar (currentMode=SHOW_COMPLETED) match expected snapshot 1`] = `
+exports[`FilterBar with currentMode=SHOW_COMPLETED should match expected snapshot 1`] = `
 <div>
   <Button
     as="button"
+    id="btnShowAll"
     onClick={[Function]}
   >
     All
   </Button>
   <Button
     as="button"
+    id="btnShowCompleted"
     onClick={[Function]}
   >
     Completed
   </Button>
   <Button
     as="button"
+    id="btnShowPending"
     onClick={[Function]}
   >
     Pending
@@ -29,12 +32,14 @@ exports[`FilterBar FilterBar (currentMode=SHOW_COMPLETED) match expected snapsho
   </Button>
   <Button
     as="button"
+    id="btnSortDateUp"
     onClick={[Function]}
   >
     Date UP
   </Button>
   <Button
     as="button"
+    id="btnSortDateDown"
     onClick={[Function]}
   >
     Date DOWN
@@ -42,22 +47,25 @@ exports[`FilterBar FilterBar (currentMode=SHOW_COMPLETED) match expected snapsho
 </div>
 `;
 
-exports[`FilterBar FilterBar (currentMode=SHOW_PENDING) match expected snapshot 1`] = `
+exports[`FilterBar with currentMode=SHOW_PENDING should match expected snapshot 1`] = `
 <div>
   <Button
     as="button"
+    id="btnShowAll"
     onClick={[Function]}
   >
     All
   </Button>
   <Button
     as="button"
+    id="btnShowCompleted"
     onClick={[Function]}
   >
     Completed
   </Button>
   <Button
     as="button"
+    id="btnShowPending"
     onClick={[Function]}
   >
     Pending
@@ -71,12 +79,14 @@ exports[`FilterBar FilterBar (currentMode=SHOW_PENDING) match expected snapshot 
   </Button>
   <Button
     as="button"
+    id="btnSortDateUp"
     onClick={[Function]}
   >
     Date UP
   </Button>
   <Button
     as="button"
+    id="btnSortDateDown"
     onClick={[Function]}
   >
     Date DOWN

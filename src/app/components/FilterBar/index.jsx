@@ -14,12 +14,12 @@ const FilterBar = ({changeShowMode, removeCompleted, changeSortMode, currentMode
 
     return (
         <div>
-            <Button onClick={() => onClick(actions.SHOW_ALL)}>All</Button>
-            <Button onClick={() => onClick(actions.SHOW_COMPLETED)}>Completed</Button>
-            <Button onClick={() => onClick(actions.SHOW_PENDING)}>Pending</Button>
+            <Button id='btnShowAll' onClick={() => onClick(actions.SHOW_ALL)}>All</Button>
+            <Button id='btnShowCompleted' onClick={() => onClick(actions.SHOW_COMPLETED)}>Completed</Button>
+            <Button id='btnShowPending' onClick={() => onClick(actions.SHOW_PENDING)}>Pending</Button>
             <Button onClick={removeCompleted} disabled={currentMode === actions.SHOW_PENDING}>Remove completed</Button>
-            <Button onClick={() => onChageSort(actions.SORT_CREATED_DATE_UP)}>Date UP</Button>
-            <Button onClick={() => onChageSort(actions.SORT_CREATED_DATE_DOWN)}>Date DOWN</Button>
+            <Button id='btnSortDateUp' onClick={() => onChageSort(actions.SORT_CREATED_DATE_UP)}>Date UP</Button>
+            <Button id='btnSortDateDown' onClick={() => onChageSort(actions.SORT_CREATED_DATE_DOWN)}>Date DOWN</Button>
         </div>
     );
 };
