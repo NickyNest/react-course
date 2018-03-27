@@ -8,8 +8,9 @@
             "lines": 50
         }
     },
+    "setupTestFrameworkScriptFile": "<rootDir>/tools/setupTestFramework",
     "collectCoverage": true,
-    "testRegex": "src/.*/.*test.js",
+    "testRegex": "src/.*/.*test.js$",
     "transform": {
         ".*": "<rootDir>/tools/jestAliasPreProcessor"
     },
