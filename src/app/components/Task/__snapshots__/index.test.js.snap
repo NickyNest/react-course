@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Task Task (completed=false) match expected snapshot 1`] = `
+exports[`Task (completed=false) match expected snapshot 1`] = `
 <div>
   <Checkbox
     checked={false}
@@ -25,7 +25,7 @@ exports[`Task Task (completed=false) match expected snapshot 1`] = `
 </div>
 `;
 
-exports[`Task Task (completed=true) match expected snapshot 1`] = `
+exports[`Task (completed=true) match expected snapshot 1`] = `
 <div>
   <Checkbox
     checked={true}
