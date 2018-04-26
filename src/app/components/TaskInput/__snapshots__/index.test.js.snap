@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TaskInput TaskInput match expected snapshot 1`] = `
+exports[`TaskInput match expected snapshot 1`] = `
 <div>
   <Input
     action={
