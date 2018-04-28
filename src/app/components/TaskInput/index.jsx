@@ -10,6 +10,8 @@ class TaskInput extends Component {
 
     onChange = ({target}) => this.setState({title: target.value});
 
+    onKeyPress = ({key}) => key === 'Enter' ? this.onClick() : '';
+
     onClick = () => {
         const {title} = this.state;
         if (!title) {
@@ -27,7 +29,7 @@ class TaskInput extends Component {
                     placeholder='add task'
                     onChange={this.onChange}
                     value={this.state.title}
-                    onKeyPress={({key}) => key === 'Enter' ? this.onClick() : ''}
+                    onKeyPress={this.onKeyPress}
                     action={{primary: true, content: 'Add', onClick: this.onClick}} />
             </div>
         );

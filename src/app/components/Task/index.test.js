@@ -30,7 +30,7 @@ test('Task with click on button should call onRemoveTask with parameter 1', () =
     expect(onRemoveTaskMock.mock.calls[0][0]).toEqual('1');
 });
 
-test('Task with toggle checkbox should call onCheckChange with parameters 1, true', () => {
+test('Task with toggle checkbox should call onCheckChange with parameters 1, false', () => {
     const onCheckChangeMock = jest.fn();
     const wrapper = mount(<Task
         task={{id: '1', title: 'temp', completed: true, createdDate: new Date(1900, 1, 1)}}
@@ -39,6 +39,5 @@ test('Task with toggle checkbox should call onCheckChange with parameters 1, tru
     wrapper.find('Checkbox').simulate('change');
 
     expect(onCheckChangeMock.mock.calls.length).toEqual(1);
-    expect(onCheckChangeMock.mock.calls[0][0]).toEqual('1');
-    expect(onCheckChangeMock.mock.calls[0][1]).toEqual(false);
+    expect(onCheckChangeMock).lastCalledWith('1', false);
 });
