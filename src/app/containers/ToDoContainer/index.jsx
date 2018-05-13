@@ -32,7 +32,7 @@ class ToDoContainer extends Component {
     };
 
     addTask = title => {
-        api.create(buildTask(title))
+        api.create(buildTask(title, new Date()))
             .then(response => response.json())
             .then(newTask =>
                 this.setState({tasks: [...this.state.tasks, {...newTask, createdDate: toDate(newTask.createdDate)}] }));

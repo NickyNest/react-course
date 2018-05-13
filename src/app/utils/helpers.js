@@ -5,15 +5,12 @@ export const toDate = weirdDate => {
     return new Date(parts[2], parts[0], parts[1]);
 };
 
-const toWeirdDate = () => {
-    const now = new Date();
-    return `${now.getMonth()}/${now.getDate()}/${now.getFullYear()}`;
-};
+const toWeirdDate = now => `${now.getMonth()}/${now.getDate()}/${now.getFullYear()}`;
 
-export const buildTask = title => ({
+export const buildTask = (title, now) => ({
     title,
     completed: false,
-    createdDate: toWeirdDate()
+    createdDate: toWeirdDate(now)
 });
 
 export const handleShowMode = (tasks, showMode) => {
