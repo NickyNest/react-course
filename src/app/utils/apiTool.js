@@ -1,8 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
-const endpoint = 'http://localhost:60253/api/tasks';
-
 const fetchRequest = options => {
+    const {endpoint} = options;
     const {method} = options;
     const {id} = options;
     const {body} = options;
@@ -23,7 +22,7 @@ const fetchRequest = options => {
     return fetch(url, init);
 };
 
-export const get = () => fetchRequest({method: 'GET'});
-export const create = body => fetchRequest({method: 'POST', body});
-export const update = (id, body) => fetchRequest({method: 'PATCH', id, body});
-export const remove = id => fetchRequest({method: 'DELETE', id});
+export const get = endpoint => fetchRequest({endpoint, method: 'GET'});
+export const create = (endpoint, body) => fetchRequest({endpoint, method: 'POST', body});
+export const update = (endpoint, id, body) => fetchRequest({endpoint, method: 'PATCH', id, body});
+export const remove = (endpoint, id) => fetchRequest({endpoint, method: 'DELETE', id});

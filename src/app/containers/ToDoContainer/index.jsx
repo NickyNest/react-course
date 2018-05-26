@@ -4,7 +4,7 @@ import Task from 'components/Task';
 import FilterBar from 'components/FilterBar';
 import {Grid} from 'semantic-ui-react';
 import {SHOW_ALL, SORT_CREATED_DATE_NONE} from 'utils/actions';
-import * as api from 'utils/apiTool';
+import * as api from 'utils/taskStore';
 import {toDate, buildTask, handleShowMode, handleSortMode} from 'utils/helpers';
 import './index.css';
 
