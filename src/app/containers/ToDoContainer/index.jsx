@@ -4,7 +4,9 @@ import Task from 'components/Task';
 import FilterBar from 'components/FilterBar';
 import {Grid} from 'semantic-ui-react';
 import {SHOW_ALL, SORT_CREATED_DATE_NONE} from 'utils/actions';
-import * as api from 'utils/taskStore';
+import * as taskApi from 'utils/taskStore';
+import * as taskTagApi from 'utils/taskTagStore';
+import * as tagApi from 'utils/tagStore';
 import {toDate, buildTask, handleShowMode, handleSortMode} from 'utils/helpers';
 import './index.css';
 
@@ -13,6 +15,9 @@ class ToDoContainer extends Component {
         super(props);
         this.state = {
             tasks: [],
+            tasks1: [],
+            tasksTags: [],
+            tags: [],
             showMode: SHOW_ALL,
             sortMode: SORT_CREATED_DATE_NONE
         };
@@ -20,10 +25,35 @@ class ToDoContainer extends Component {
 
     componentWillMount() {
         this.getAllTasks();
+
+        this.getTasks();
+        this.getTasksTags();
+        this.getTags();
+    }
+
+    getTasks = () => {
+        taskApi.get()
+            .then(response => response.json())
+            .then(response => {
+                const tasks1 = response.map(task => ({...task, createdDate: toDate(task.createdDate)}));
+                this.setState({tasks1});
+            });
+    }
+
+    getTasksTags = () => {
+        taskTagApi.get()
+            .then(response => response.json())
+            .then(response => { this.setState({tasksTags: response}); });
+    }
+
+    getTags = () => {
+        tagApi.get()
+            .then(response => response.json())
+            .then(data => { this.setState({tags: data}); });
     }
 
     getAllTasks = () => {
-        api.get()
+        taskApi.get()
             .then(response => response.json())
             .then(response => {
                 const tasks = response.map(task => ({...task, createdDate: toDate(task.createdDate)}));
@@ -31,15 +61,31 @@ class ToDoContainer extends Component {
             });
     };
 
+   getTasksWithTags = () => {
+       const {tasks1} = this.state;
+       const {tasksTags} = this.state;
+       const {tags} = this.state;
+
+       if (tags.length === 0) {
+           return [];
+       }
+
+       const tasksTagsWithName = tasksTags.map(taskTag => (
+           {...taskTag, title: tags.find(tag => tag.id === taskTag.tagId).title}));
+
+       return tasks1.map(task1 => (
+           {...task1, tags: tasksTagsWithName.filter(taskTag => taskTag.taskId === task1.id)}));
+   }
+
     addTask = title => {
-        api.create(buildTask(title, new Date()))
+        taskApi.create(buildTask(title, new Date()))
             .then(response => response.json())
             .then(newTask =>
                 this.setState({tasks: [...this.state.tasks, {...newTask, createdDate: toDate(newTask.createdDate)}] }));
     };
 
     updateTak = (id, isCompleted) => {
-        api.update(id, {completed: isCompleted})
+        taskApi.update(id, {completed: isCompleted})
             .then(response => {
                 if (response.ok) {
                     const {tasks} = this.state;
@@ -57,7 +103,7 @@ class ToDoContainer extends Component {
     };
 
     removeTask = id => {
-        api.remove(id)
+        taskApi.remove(id)
             .then(response => {
                 if (response.ok) {
                     this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
@@ -83,7 +129,7 @@ class ToDoContainer extends Component {
     removeCompleted = () => {
         this.state.tasks
             .filter(task => task.completed === true)
-            .forEach(task => api.remove(task.id));
+            .forEach(task => taskApi.remove(task.id));
 
         this.getAllTasks();
     };
@@ -93,9 +139,11 @@ class ToDoContainer extends Component {
     };
 
     render() {
+        const newTasks = this.getTasksWithTags();
+
         const {showMode} = this.state;
 
-        const filteredTasks = handleShowMode(this.state.tasks, showMode);
+        const filteredTasks = handleShowMode(newTasks, showMode);
         const filteredAndSortedTasks = handleSortMode(filteredTasks, this.state.sortMode);
 
         const title = 'Simple To-Do application';
@@ -110,7 +158,7 @@ class ToDoContainer extends Component {
                 <span>total: {filteredTasks.length}</span>
                 <TaskInput onAddTask={this.addTask} />
                 <Grid>
-                    <Grid.Column width={5}>
+                    <Grid.Column width={10}>
                         {filteredAndSortedTasks.length === 0 ? 'huhЪ' : this.mapToDoTaskList(filteredAndSortedTasks)}
                     </Grid.Column>
                 </Grid>

@@ -1,4 +1,5 @@
 import React from 'react';
+import TaskTag from 'components/TaskTag';
 import {Checkbox} from 'semantic-ui-react';
 import {shape, string, bool, instanceOf, func} from 'prop-types';
 import './index.css';
@@ -8,6 +9,7 @@ const Task = ({task, onCheckChange, onRemoveTask}) => (
         <Checkbox toggle checked={task.completed} onChange={(e, {checked}) => onCheckChange(task.id, checked)} />
         <span className={task.completed ? 'throw-text' : ''}>{task.title}</span>&nbsp;&nbsp;
         <span>{task.createdDate.toLocaleDateString()}</span>
+        {task.tags.length === 0 ? '' : task.tags.map(tag => <TaskTag key={tag.tagId} taskTag={tag} />)}
         <button onClick={() => onRemoveTask(task.id)}>X</button>
     </div>
 );
