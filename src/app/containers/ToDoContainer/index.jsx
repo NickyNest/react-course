@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TaskInput from 'components/TaskInput';
 import Task from 'components/Task';
 import FilterBar from 'components/FilterBar';
+import Tag from 'components/Tag';
 import {Grid} from 'semantic-ui-react';
 import {SHOW_ALL, SORT_CREATED_DATE_NONE} from 'utils/actions';
 import * as taskApi from 'utils/taskStore';
@@ -73,9 +74,15 @@ class ToDoContainer extends Component {
        const tasksTagsWithName = tasksTags.map(taskTag => (
            {...taskTag, title: tags.find(tag => tag.id === taskTag.tagId).title}));
 
-       return tasks1.map(task1 => (
-           {...task1, tags: tasksTagsWithName.filter(taskTag => taskTag.taskId === task1.id)}));
+       return tasks1.map(task => (
+           {...task, tags: tasksTagsWithName.filter(taskTag => taskTag.taskId === task.id)}));
    }
+
+   addTaskTag = (tagId, taskId) => {
+       taskTagApi.create({taskId, tagId})
+           .then(response => response.json())
+           .then(newTaskTag => this.setState({tasksTags: [...this.state.tasksTags, newTaskTag] }));
+   };
 
     addTask = title => {
         taskApi.create(buildTask(title, new Date()))
@@ -113,11 +120,36 @@ class ToDoContainer extends Component {
             });
     };
 
+    removeTaskTag = id => {
+        taskTagApi.remove(id)
+            .then(response => {
+                if (response.ok) {
+                    this.setState({tasksTags: this.state.tasksTags.filter(taskTag => taskTag.id !== id)});
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            });
+    };
+
     mapToDoTaskList = tasks => (
         <div>
             {
                 tasks.map(task =>
-                    <Task key={task.id} task={task} onCheckChange={this.updateTak} onRemoveTask={this.removeTask} />)
+                    (<Task
+                        key={task.id}
+                        task={task}
+                        onCheckChange={this.updateTak}
+                        onRemoveTask={this.removeTask}
+                        onAddTaskTag={this.addTaskTag}
+                        onRemoveTaskTag={this.removeTaskTag} />))
+            }
+        </div>
+    );
+
+    mapTags = tags => (
+        <div>
+            {
+                tags.map(tag => <Tag key={tag.id} tag={tag} />)
             }
         </div>
     );
@@ -146,6 +178,8 @@ class ToDoContainer extends Component {
         const filteredTasks = handleShowMode(newTasks, showMode);
         const filteredAndSortedTasks = handleSortMode(filteredTasks, this.state.sortMode);
 
+        const {tags} = this.state;
+
         const title = 'Simple To-Do application';
         return (
             <div>
@@ -157,9 +191,12 @@ class ToDoContainer extends Component {
                     currentMode={showMode} />
                 <span>total: {filteredTasks.length}</span>
                 <TaskInput onAddTask={this.addTask} />
-                <Grid>
+                <Grid divided>
                     <Grid.Column width={10}>
                         {filteredAndSortedTasks.length === 0 ? 'huhЪ' : this.mapToDoTaskList(filteredAndSortedTasks)}
+                    </Grid.Column>
+                    <Grid.Column width={4}>
+                        {tags.length === 0 ? 'huhЪ' : this.mapTags(tags)}
                     </Grid.Column>
                 </Grid>
             </div>
