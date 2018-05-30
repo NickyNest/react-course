@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {func} from 'prop-types';
+import {func, string} from 'prop-types';
 import {Input} from 'semantic-ui-react';
 
 class TaskInput extends Component {
@@ -26,7 +26,7 @@ class TaskInput extends Component {
             <div>
                 <Input
                     focus
-                    placeholder='add task'
+                    placeholder={this.props.placeholder}
                     onChange={this.onChange}
                     value={this.state.title}
                     onKeyPress={this.onKeyPress}
@@ -37,7 +37,8 @@ class TaskInput extends Component {
 }
 
 TaskInput.propTypes = {
-    onAddTask: func.isRequired
+    onAddTask: func.isRequired,
+    placeholder: string.isRequired
 };
 
 export default TaskInput;

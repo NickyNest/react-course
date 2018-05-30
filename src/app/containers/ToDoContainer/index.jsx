@@ -51,6 +51,13 @@ class ToDoContainer extends Component {
            {...task, tags: tasksTagsWithName.filter(taskTag => taskTag.taskId === task.id)}));
    }
 
+   getTags = () => {
+       const {tags} = this.state;
+       const {tasksTags} = this.state;
+
+       return tags.map(tag => ({...tag, count: tasksTags.filter(taskTag => taskTag.tagId === tag.id).length}));
+   }
+
    addTaskTag = (tagId, taskId) => {
        taskTagApi.create({taskId, tagId})
            .then(response => response.json())
@@ -63,6 +70,12 @@ class ToDoContainer extends Component {
             .then(newTask =>
                 this.setState({tasks: [...this.state.tasks, {...newTask, createdDate: toDate(newTask.createdDate)}] }));
     };
+
+    addTag = title => {
+        tagApi.create({title})
+            .then(response => response.json())
+            .then(newTag => this.setState({tags: [...this.state.tags, newTag] }));
+    }
 
     updateTak = (id, isCompleted) => {
         taskApi.update(id, {completed: isCompleted})
@@ -86,7 +99,9 @@ class ToDoContainer extends Component {
         taskApi.remove(id)
             .then(response => {
                 if (response.ok) {
-                    this.setState({tasks: this.state.tasks.filter(task => task.id !== id)});
+                    this.setState({
+                        tasks: this.state.tasks.filter(task => task.id !== id),
+                        tasksTags: this.state.tasksTags.filter(taskTag => taskTag.taskId !== id)});
                 } else {
                     throw new Error('Network response was not ok.');
                 }
@@ -103,6 +118,19 @@ class ToDoContainer extends Component {
                 }
             });
     };
+
+    removeTag = id => {
+        tagApi.remove(id)
+            .then(response => {
+                if (response.ok) {
+                    this.setState({
+                        tags: this.state.tags.filter(tag => tag.id !== id),
+                        tasksTags: this.state.tasksTags.filter(taskTag => taskTag.tagId !== id)});
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            });
+    }
 
     mapToDoTaskList = tasks => (
         <div>
@@ -122,7 +150,7 @@ class ToDoContainer extends Component {
     mapTags = tags => (
         <div>
             {
-                tags.map(tag => <Tag key={tag.id} tag={tag} />)
+                tags.map(tag => <Tag key={tag.id} tag={tag} onRemoveTag={this.removeTag} />)
             }
         </div>
     );
@@ -151,7 +179,7 @@ class ToDoContainer extends Component {
         const filteredTasks = handleShowMode(tasks, showMode);
         const filteredAndSortedTasks = handleSortMode(filteredTasks, this.state.sortMode);
 
-        const {tags} = this.state;
+        const tags = this.getTags();
 
         const title = 'Simple To-Do application';
         return (
@@ -163,12 +191,14 @@ class ToDoContainer extends Component {
                     changeSortMode={this.changeSortMode}
                     currentMode={showMode} />
                 <span>total: {filteredTasks.length}</span>
-                <TaskInput onAddTask={this.addTask} />
+
                 <Grid divided>
                     <Grid.Column width={10}>
+                        <TaskInput onAddTask={this.addTask} placeholder='add task' />
                         {filteredAndSortedTasks.length === 0 ? 'huhЪ' : this.mapToDoTaskList(filteredAndSortedTasks)}
                     </Grid.Column>
                     <Grid.Column width={4}>
+                        <TaskInput onAddTask={this.addTag} placeholder='add tag' />
                         {tags.length === 0 ? 'huhЪ' : this.mapTags(tags)}
                     </Grid.Column>
                 </Grid>
