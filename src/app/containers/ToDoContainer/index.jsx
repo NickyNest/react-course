@@ -16,7 +16,6 @@ class ToDoContainer extends Component {
         super(props);
         this.state = {
             tasks: [],
-            tasks1: [],
             tasksTags: [],
             tags: [],
             showMode: SHOW_ALL,
@@ -25,56 +24,30 @@ class ToDoContainer extends Component {
     }
 
     componentWillMount() {
-        this.getAllTasks();
-
-        this.getTasks();
-        this.getTasksTags();
-        this.getTags();
+        this.getData();
     }
 
-    getTasks = () => {
-        taskApi.get()
-            .then(response => response.json())
-            .then(response => {
-                const tasks1 = response.map(task => ({...task, createdDate: toDate(task.createdDate)}));
-                this.setState({tasks1});
+    getData = () => {
+        Promise.all([
+            taskApi.get().then(response => response.json()),
+            taskTagApi.get().then(response => response.json()),
+            tagApi.get().then(response => response.json())])
+
+            .then(([taskData, taskTagData, tagData]) => {
+                const tasks = taskData.map(task => ({...task, createdDate: toDate(task.createdDate)}));
+                this.setState({tasks, tasksTags: taskTagData, tags: tagData});
             });
     }
-
-    getTasksTags = () => {
-        taskTagApi.get()
-            .then(response => response.json())
-            .then(response => { this.setState({tasksTags: response}); });
-    }
-
-    getTags = () => {
-        tagApi.get()
-            .then(response => response.json())
-            .then(data => { this.setState({tags: data}); });
-    }
-
-    getAllTasks = () => {
-        taskApi.get()
-            .then(response => response.json())
-            .then(response => {
-                const tasks = response.map(task => ({...task, createdDate: toDate(task.createdDate)}));
-                this.setState({tasks});
-            });
-    };
 
    getTasksWithTags = () => {
-       const {tasks1} = this.state;
+       const {tasks} = this.state;
        const {tasksTags} = this.state;
        const {tags} = this.state;
-
-       if (tags.length === 0) {
-           return [];
-       }
 
        const tasksTagsWithName = tasksTags.map(taskTag => (
            {...taskTag, title: tags.find(tag => tag.id === taskTag.tagId).title}));
 
-       return tasks1.map(task => (
+       return tasks.map(task => (
            {...task, tags: tasksTagsWithName.filter(taskTag => taskTag.taskId === task.id)}));
    }
 
@@ -171,11 +144,11 @@ class ToDoContainer extends Component {
     };
 
     render() {
-        const newTasks = this.getTasksWithTags();
+        const tasks = this.getTasksWithTags();
 
         const {showMode} = this.state;
 
-        const filteredTasks = handleShowMode(newTasks, showMode);
+        const filteredTasks = handleShowMode(tasks, showMode);
         const filteredAndSortedTasks = handleSortMode(filteredTasks, this.state.sortMode);
 
         const {tags} = this.state;
