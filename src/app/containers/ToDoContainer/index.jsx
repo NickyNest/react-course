@@ -23,7 +23,7 @@ class ToDoContainer extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getData();
     }
 
