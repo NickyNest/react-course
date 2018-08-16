@@ -1,16 +1,20 @@
 import {combineReducers} from 'redux';
-import {ADD_TASK, UPDATE_TASK, REMOVE_TASK, SHOW_MODES, SORT_MODES, SET_SHOW_MODE, SET_SORT_MODE} from './actions';
+import {GET_TASKS_SUCCESS, ADD_TASK, UPDATE_TASK, REMOVE_TASK,
+    SHOW_MODES, SORT_MODES, FETCH_MODES, SET_SHOW_MODE, SET_SORT_MODE, SET_FETCH_MODE} from './actions';
 
 // const initialState = {
 //     tasks: [],
 //     showMode: SHOW_MODES.SHOW_ALL,
-//     sortMode: SORT_MODES.CREATED_DATE_NONE
+//     sortMode: SORT_MODES.CREATED_DATE_NONE,
+//     fetchMode: FETCH_MODES.NO_FETCHING
 // };
 
-const tasks = (state = [], action) => {
+const tasksReducer = (state = [], action) => {
     let taskIndex;
 
     switch (action.type) {
+        case GET_TASKS_SUCCESS:
+            return action.payload.tasks;
         case ADD_TASK:
             return [...state, action.payload.task];
         case UPDATE_TASK:
@@ -27,7 +31,7 @@ const tasks = (state = [], action) => {
     }
 };
 
-const showMode = (state = SHOW_MODES.SHOW_ALL, action) => {
+const showModeReducer = (state = SHOW_MODES.SHOW_ALL, action) => {
     switch (action.type) {
         case SET_SHOW_MODE:
             return action.payload.showMode;
@@ -36,7 +40,7 @@ const showMode = (state = SHOW_MODES.SHOW_ALL, action) => {
     }
 };
 
-const sortMode = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
+const sortModeReducer = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
     switch (action.type) {
         case SET_SORT_MODE:
             return action.payload.sortMode;
@@ -45,18 +49,26 @@ const sortMode = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
     }
 };
 
-// const taskApp2 = (state = initialState, action) => {
+const fetchModeReducer = (state = FETCH_MODES.NO_FETCHING, action) => {
+    switch (action.type) {
+        case SET_FETCH_MODE:
+            return action.payload.fetchMode;
+        default:
+            return state;
+    }
+};
+
+// const todoApp = (state = initialState, action) => {
 //     switch (action.type) {
+//         case REQUEST_TASKS:
 //         case ADD_TASK:
-//             return {...state, tasks: tasks(state.tasks, action)};
 //         case UPDATE_TASK:
-//             return {...state, tasks: tasks(state.tasks, action)};
 //         case REMOVE_TASK:
-//             return {...state, tasks: tasks(state.tasks, action)};
+//             return {...state, tasks: tasksReducer(state, action)};
 //         case SET_SHOW_MODE:
-//             return {...state, showMode: showMode(state.showMode, action)};
+//             return {...state, showMode: showModeReducer(state.showMode, action)};
 //         case SET_SORT_MODE:
-//             return {...state, sortMode: sortMode(state.sortMode, action)};
+//             return {...state, sortMode: sortModeReducer(state.sortMode, action)};
 //         default:
 //             return state;
 //     }
@@ -68,9 +80,10 @@ const sortMode = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
 //     sortMode: sortMode(state.sortMode, action)
 // });
 const todoApp = combineReducers({
-    tasks,
-    showMode,
-    sortMode
+    tasks: tasksReducer,
+    showMode: showModeReducer,
+    sortMode: sortModeReducer,
+    fetchMode: fetchModeReducer
 });
 
 export default todoApp;
