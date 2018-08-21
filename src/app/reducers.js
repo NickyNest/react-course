@@ -58,32 +58,11 @@ const fetchModeReducer = (state = FETCH_MODES.NO_FETCHING, action) => {
     }
 };
 
-// const todoApp = (state = initialState, action) => {
-//     switch (action.type) {
-//         case REQUEST_TASKS:
-//         case ADD_TASK:
-//         case UPDATE_TASK:
-//         case REMOVE_TASK:
-//             return {...state, tasks: tasksReducer(state, action)};
-//         case SET_SHOW_MODE:
-//             return {...state, showMode: showModeReducer(state.showMode, action)};
-//         case SET_SORT_MODE:
-//             return {...state, sortMode: sortModeReducer(state.sortMode, action)};
-//         default:
-//             return state;
-//     }
-// };
-
-// const taskApp = (state = {}, action) => ({
-//     tasks: tasks(state.tasks, action),
-//     showMode: showMode(state.showMode, action),
-//     sortMode: sortMode(state.sortMode, action)
-// });
-const todoApp = combineReducers({
+const rootReducer = combineReducers({
     tasks: tasksReducer,
     showMode: showModeReducer,
     sortMode: sortModeReducer,
     fetchMode: fetchModeReducer
 });
 
-export default todoApp;
+export default rootReducer;
