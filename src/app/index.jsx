@@ -2,12 +2,11 @@ import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import root from 'lodash._root';
-import MainPage from 'containers/MainPage';
+import RootContainer from 'containers/RootContainer';
 import thunkMiddleware from 'redux-thunk';
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import rootReducer from './reducers';
-import {fetchTasks} from './actions';
 import './index.css';
 
 const store = createStore(
@@ -20,11 +19,9 @@ const store = createStore(
     )
 );
 
-store.dispatch(fetchTasks());
-
 render(
     <Provider store={store}>
-        <MainPage />
+        <RootContainer />
     </Provider>,
     root.document.getElementById('root')
 );

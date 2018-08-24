@@ -1,4 +1,5 @@
 import * as taskApi from 'utils/taskStore';
+import {toDate} from 'utils/helpers';
 
 export const GET_TASKS = 'GET_TASKS';
 export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
@@ -42,8 +43,9 @@ export const fetchTasks = () => dispatch => {
     dispatch(setFetchMode(FETCH_MODES.IS_FETCHING));
     dispatch(getTasks());
     return taskApi.get().then(response => response.json())
-        .then(json => {
+        .then(taskData => taskData.map(task => ({...task, createdDate: toDate(task.createdDate)})))
+        .then(tasks => {
             dispatch(setFetchMode(FETCH_MODES.NO_FETCHING));
-            dispatch(getTasksSuccess(json));
+            dispatch(getTasksSuccess(tasks));
         });
 };
