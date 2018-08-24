@@ -23,11 +23,6 @@ export const SORT_MODES = {
     CREATED_DATE_DOWN: 'CREATED_DATE_DOWN'
 };
 
-export const FETCH_MODES = {
-    NO_FETCHING: 'NO_FETCHING',
-    IS_FETCHING: 'IS_FETCHING'
-};
-
 export const getTasks = () => ({type: GET_TASKS});
 export const getTasksSuccess = tasks => ({type: GET_TASKS_SUCCESS, payload: {tasks} });
 
@@ -38,14 +33,18 @@ export const removeTask = id => ({type: REMOVE_TASK, payload: {id} });
 export const setShowMode = showMode => ({type: SET_SHOW_MODE, payload: {showMode} });
 export const setSortMode = sortMode => ({type: SET_SORT_MODE, payload: {sortMode} });
 export const setFetchMode = fetchMode => ({type: SET_FETCH_MODE, payload: {fetchMode} });
-
+const sleep = () => {
+    const e = new Date().getTime() + 2000;
+    while (new Date().getTime() <= e) { console.log(e); }
+};
 export const fetchTasks = () => dispatch => {
-    dispatch(setFetchMode(FETCH_MODES.IS_FETCHING));
+    dispatch(setFetchMode(true));
     dispatch(getTasks());
     return taskApi.get().then(response => response.json())
         .then(taskData => taskData.map(task => ({...task, createdDate: toDate(task.createdDate)})))
         .then(tasks => {
-            dispatch(setFetchMode(FETCH_MODES.NO_FETCHING));
+            sleep();
+            dispatch(setFetchMode(false));
             dispatch(getTasksSuccess(tasks));
         });
 };

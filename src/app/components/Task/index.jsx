@@ -23,7 +23,8 @@ const Task = ({task, onCheckChange, onRemoveTask, onAddTaskTag, onRemoveTaskTag}
                 onDrop={e => onDrop(e, task.id)}>{task.title}
             </span>&nbsp;&nbsp;
             <span>{task.createdDate.toLocaleDateString()}</span>&nbsp;&nbsp;
-            {task.tags.length === 0 ? '' : task.tags.map(tag => <TaskTag key={tag.tagId} taskTag={tag} onRemoveTaskTag={onRemoveTaskTag} />)}
+            {task.tags && task.tags.length !== 0 ?
+                task.tags.map(tag => <TaskTag key={tag.tagId} taskTag={tag} onRemoveTaskTag={onRemoveTaskTag} />) : ''}
             <button onClick={() => onRemoveTask(task.id)}>X</button>
         </div>
     );

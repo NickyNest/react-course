@@ -6,7 +6,7 @@ import {GET_TASKS_SUCCESS, ADD_TASK, UPDATE_TASK, REMOVE_TASK,
 //     tasks: [],
 //     showMode: SHOW_MODES.SHOW_ALL,
 //     sortMode: SORT_MODES.CREATED_DATE_NONE,
-//     fetchMode: FETCH_MODES.NO_FETCHING
+//     isFetching: false
 // };
 
 const tasksReducer = (state = [], action) => {
@@ -49,7 +49,7 @@ const sortModeReducer = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
     }
 };
 
-const fetchModeReducer = (state = FETCH_MODES.NO_FETCHING, action) => {
+const fetchModeReducer = (state = false, action) => {
     switch (action.type) {
         case SET_FETCH_MODE:
             return action.payload.fetchMode;
@@ -62,7 +62,7 @@ const rootReducer = combineReducers({
     tasks: tasksReducer,
     showMode: showModeReducer,
     sortMode: sortModeReducer,
-    fetchMode: fetchModeReducer
+    isFetching: fetchModeReducer
 });
 
 export default rootReducer;
