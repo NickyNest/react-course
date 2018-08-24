@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Logo from 'components/Logo';
 import ToDoContainer from 'containers/ToDoContainer';
+import TaskList from 'containers/TaskList';
+import {Grid} from 'semantic-ui-react';
 import './index.css';
 
 class MainPage extends Component {
@@ -31,6 +33,15 @@ class MainPage extends Component {
                     </p>
                 </div>
                 <ToDoContainer />
+                <h2>With redux</h2>
+                <Grid divided>
+                    <Grid.Column width={10}>
+                        <TaskList />
+                    </Grid.Column>
+                    <Grid.Column width={4}>
+                        <span>In progress...</span>
+                    </Grid.Column>
+                </Grid>
             </div>
         );
     }

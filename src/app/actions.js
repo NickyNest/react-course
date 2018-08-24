@@ -38,8 +38,8 @@ const sleep = () => {
     while (new Date().getTime() <= e) { console.log(e); }
 };
 export const fetchTasks = () => dispatch => {
-    dispatch(setFetchMode(true));
     dispatch(getTasks());
+    dispatch(setFetchMode(true));
     return taskApi.get().then(response => response.json())
         .then(taskData => taskData.map(task => ({...task, createdDate: toDate(task.createdDate)})))
         .then(tasks => {

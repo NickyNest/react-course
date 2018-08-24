@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {GET_TASKS_SUCCESS, ADD_TASK, UPDATE_TASK, REMOVE_TASK,
-    SHOW_MODES, SORT_MODES, FETCH_MODES, SET_SHOW_MODE, SET_SORT_MODE, SET_FETCH_MODE} from './actions';
+    SHOW_MODES, SORT_MODES, SET_SHOW_MODE, SET_SORT_MODE, SET_FETCH_MODE} from './actions';
 
 // const initialState = {
 //     tasks: [],
