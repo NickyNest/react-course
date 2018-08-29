@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TaskInput from 'components/TaskInput';
 import Task from 'components/Task';
-import FilterBar from 'components/FilterBar';
+import {FilterBarPure as FilterBar} from 'containers/FilterBar';
 import Tag from 'components/Tag';
 import {Grid} from 'semantic-ui-react';
 import {SHOW_ALL, SORT_CREATED_DATE_NONE} from 'utils/actions';

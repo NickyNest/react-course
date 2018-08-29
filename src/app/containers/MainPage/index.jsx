@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Logo from 'components/Logo';
 import ToDoContainer from 'containers/ToDoContainer';
 import TaskList from 'containers/TaskList';
+import FilterBar from 'containers/FilterBar';
 import {Grid} from 'semantic-ui-react';
 import './index.css';
 
@@ -36,6 +37,7 @@ class MainPage extends Component {
                 <h2>With redux</h2>
                 <Grid divided>
                     <Grid.Column width={10}>
+                        <FilterBar />
                         <TaskList />
                     </Grid.Column>
                     <Grid.Column width={4}>

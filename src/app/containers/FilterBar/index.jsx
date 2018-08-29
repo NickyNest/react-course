@@ -1,9 +1,11 @@
 import React from 'react';
 import {func, string} from 'prop-types';
 import {Button} from 'semantic-ui-react';
+import {connect} from 'react-redux';
 import * as actions from 'utils/actions';
+import {setShowMode, setSortMode} from '../../actions';
 
-const FilterBar = ({changeShowMode, removeCompleted, changeSortMode, currentMode}) => {
+export const FilterBarPure = ({changeShowMode, removeCompleted, changeSortMode, currentMode}) => {
     const onClick = showMode => {
         changeShowMode(showMode);
     };
@@ -24,11 +26,24 @@ const FilterBar = ({changeShowMode, removeCompleted, changeSortMode, currentMode
     );
 };
 
-FilterBar.propTypes = {
+FilterBarPure.propTypes = {
     changeShowMode: func.isRequired,
     removeCompleted: func.isRequired,
     changeSortMode: func.isRequired,
     currentMode: string.isRequired
 };
 
-export default FilterBar;
+const mapStateToProps = state => ({
+    currentMode: state.showMode
+});
+
+const mapDispatchToProps = dispatch => ({
+    changeShowMode: showMode => dispatch(setShowMode(showMode)),
+    removeCompleted: () => {},
+    changeSortMode: sortMode => dispatch(setSortMode(sortMode))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FilterBarPure);
