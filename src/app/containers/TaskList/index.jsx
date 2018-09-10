@@ -3,6 +3,7 @@ import Task from 'components/Task';
 import {shape, string, bool, instanceOf, func, arrayOf} from 'prop-types';
 import {connect} from 'react-redux';
 import {fetchTasks} from '../../actions';
+import getFilteredTasks from './selector';
 
 class TaskList extends Component {
     componentDidMount() {
@@ -52,7 +53,7 @@ TaskList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    tasks: state.tasks,
+    tasks: getFilteredTasks(state.tasks, state.showMode, state.sortMode),
     isFetching: state.isFetching
 });
 

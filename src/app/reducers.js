@@ -40,7 +40,7 @@ const showModeReducer = (state = SHOW_MODES.SHOW_ALL, action) => {
     }
 };
 
-const sortModeReducer = (state = SORT_MODES.CREATED_DATE_NONE, action) => {
+const sortModeReducer = (state = SORT_MODES.SORT_CREATED_DATE_NONE, action) => {
     switch (action.type) {
         case SET_SORT_MODE:
             return action.payload.sortMode;
