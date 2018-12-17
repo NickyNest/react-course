@@ -2,13 +2,18 @@ import React, {Component} from 'react';
 import Task from 'components/Task';
 import {shape, string, bool, instanceOf, func, arrayOf} from 'prop-types';
 import {connect} from 'react-redux';
-import {fetchTasks} from '../../actions';
+import {fetchTasks, toggleTask} from '../../actions';
 import getFilteredTasks from './selector';
 
 class TaskList extends Component {
     componentDidMount() {
         const {dispatch} = this.props;
         dispatch(fetchTasks());
+    }
+
+    onCheckChange = (id, isCompleted) => {
+        const {dispatch} = this.props;
+        dispatch(toggleTask(id, isCompleted));
     }
 
     mapToDoTaskList = tasks => (
@@ -18,7 +23,7 @@ class TaskList extends Component {
                     (<Task
                         key={task.id}
                         task={task}
-                        onCheckChange={this.fake}
+                        onCheckChange={this.onCheckChange}
                         onRemoveTask={this.fake}
                         onAddTaskTag={this.fake}
                         onRemoveTaskTag={this.fake} />))

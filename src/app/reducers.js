@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {GET_TASKS_SUCCESS, ADD_TASK, UPDATE_TASK, REMOVE_TASK,
+import {GET_TASKS_SUCCESS, ADD_TASK, UPDATE_TASK_SUCCESS, REMOVE_TASK,
     SHOW_MODES, SORT_MODES, SET_SHOW_MODE, SET_SORT_MODE, SET_FETCH_MODE} from './actions';
 
 // const initialState = {
@@ -17,7 +17,7 @@ const tasksReducer = (state = [], action) => {
             return action.payload.tasks;
         case ADD_TASK:
             return [...state, action.payload.task];
-        case UPDATE_TASK:
+        case UPDATE_TASK_SUCCESS:
             taskIndex = state.findIndex(task => task.id === action.payload.id);
             return [
                 ...state.slice(0, taskIndex),

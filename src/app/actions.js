@@ -5,6 +5,7 @@ export const GET_TASKS = 'GET_TASKS';
 export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
 export const ADD_TASK = 'ADD_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
+export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
 export const REMOVE_TASK = 'REMOVE_TASK';
 
 export const SET_SHOW_MODE = 'SET_SHOW_MODE';
@@ -23,16 +24,20 @@ export const SORT_MODES = {
     SORT_CREATED_DATE_DOWN: 'SORT_CREATED_DATE_DOWN'
 };
 
-export const getTasks = () => ({type: GET_TASKS});
+const getTasks = () => ({type: GET_TASKS});
 export const getTasksSuccess = tasks => ({type: GET_TASKS_SUCCESS, payload: {tasks} });
 
 export const addTask = task => ({type: ADD_TASK, payload: {task} });
-export const updateTask = (id, isCompleted) => ({type: UPDATE_TASK, payload: {id, isCompleted} });
+
+const updateTask = () => ({type: UPDATE_TASK});
+export const updateTaskSuccess = (id, isCompleted) => ({type: UPDATE_TASK_SUCCESS, payload: {id, isCompleted} });
+
 export const removeTask = id => ({type: REMOVE_TASK, payload: {id} });
 
 export const setShowMode = showMode => ({type: SET_SHOW_MODE, payload: {showMode} });
 export const setSortMode = sortMode => ({type: SET_SORT_MODE, payload: {sortMode} });
 export const setFetchMode = fetchMode => ({type: SET_FETCH_MODE, payload: {fetchMode} });
+
 const sleep = () => {
     const e = new Date().getTime() + 2000;
     while (new Date().getTime() <= e) { console.log(e); }
@@ -46,5 +51,17 @@ export const fetchTasks = () => dispatch => {
             sleep();
             dispatch(setFetchMode(false));
             dispatch(getTasksSuccess(tasks));
+        });
+};
+
+export const toggleTask = (id, isCompleted) => dispatch => {
+    dispatch(updateTask());
+    return taskApi.update(id, {completed: isCompleted})
+        .then(response => {
+            if (response.ok) {
+                dispatch(updateTaskSuccess(id, isCompleted));
+            } else {
+                throw new Error('Network response was not ok.');
+            }
         });
 };
